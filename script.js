@@ -1,20 +1,27 @@
 const http = require('http');
-const express = require('express');
-const app = express();
-
+const url = require('url');
 
 const hostname = '127.0.0.1';
 const port = 3000;
+const base = 'http://localhost:3000';
 
-app.get('/players', function(_req,res){
-    res.write('Players dummy');
-    res.end();
-});
+// create Server
+const server = http.createServer((req, res) => {
 
-const server = http.createServer((_req,res) => {
-    res.statusCode = 200;
-    res.setHeader ('Content-Type', 'text/plain');
-    res.end('Hello World\n');
+    const method = req.method;
+    /*
+    //url property takes the full url except protocol, hostname and port
+    //that's why the url module comes to help
+    const currentUrl = req.url;
+    */
+    const currentUrl = new URL(req.url, base);
+    const pathname = currentUrl.pathname;
+
+    if (method === 'GET' && pathname === '/') {
+        res.end('Hello World');
+    } else if (method === 'GET' && pathname === '/players') {
+        res.end('dummy at last\n');
+    }
 });
 
 server.listen(port, hostname, () => {
