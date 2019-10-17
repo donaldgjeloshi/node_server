@@ -1,0 +1,25 @@
+{
+  "name": "node_server",
+  "version": "1.0.0",
+  "description": "server made with node.js ",
+  "main": "node.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donaldgjeloshi/node_server.git"
+  },
+  "keywords": [
+    "node",
+    "javascript"
+  ],
+  "author": "Donald Gjeloshi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/donaldgjeloshi/node_server/issues"
+  },
+  "homepage": "https://github.com/donaldgjeloshi/node_server#readme",
+  "dependencies": {
+  }
+}
