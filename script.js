@@ -1,5 +1,5 @@
 const http = require("http");
-const url = require("url");
+//const url = require("url");
 const fs = require("fs");
 const querystring = require("querystring");
 const readline = require("readline");
@@ -27,9 +27,25 @@ const server = http.createServer((req, res) => {
       }
       res.end();
     });
-    // create a list of dummy players
-  } else if (method === "GET" && pathname === "/players") {
-    console.log("pathname:" + pathname);
+    // display the list
+  } else if (method === "GET" && pathname === "/") {
+    readInterface.on("line", function(line) {
+      console.log(line);
+      res.write(`
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Players</title>
+      </head>
+      <body>
+          <p>${line}</p>
+      </body>
+      </html>
+      `);
+    });
     // parse
   } else if (method === "POST") {
     fs.readFile("create-player.html", (error, data) => {
@@ -46,9 +62,6 @@ const server = http.createServer((req, res) => {
           fs.appendFile("players.txt", "\n" + result.name, err => {
             if (err) throw err;
             //console.log("Name of player added!");
-          });
-          readInterface.on("line", function(line) {
-            console.log(line);
           });
         });
       }
