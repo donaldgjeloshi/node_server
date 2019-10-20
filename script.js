@@ -2,6 +2,7 @@ const http = require("http");
 const url = require("url");
 const fs = require("fs");
 const querystring = require("querystring");
+const readline = require("readline");
 
 const hostname = "127.0.0.1";
 const port = 3000;
@@ -38,12 +39,16 @@ const server = http.createServer((req, res) => {
         throw error;
       } else {
         collectRequestData(req, result => {
-          console.log(result);
-          res.write(`Player name ${result.name}`);
+          //console.log(result);
+          res.write(`Player name ${result.name} added to the file!`);
           res.end();
+          // write names to the file players.txt
           fs.appendFile("players.txt", "\n" + result.name, err => {
             if (err) throw err;
-            console.log("Name of player added!");
+            //console.log("Name of player added!");
+          });
+          readInterface.on("line", function(line) {
+            console.log(line);
           });
         });
       }
@@ -69,3 +74,9 @@ function collectRequestData(request, callback) {
     callback(null);
   }
 }
+
+const readInterface = readline.createInterface({
+  input: fs.createReadStream("players.txt"),
+  output: process.stdout,
+  console: false
+});
